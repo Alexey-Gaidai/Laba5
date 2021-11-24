@@ -46,10 +46,27 @@ namespace Laba5
             graph(Convert.ToDouble(lower.Text), Convert.ToDouble(upper.Text), 1, rectangles);
             return result;
         }
+        double Trapezia(double a, double b, int n)
+        {
+            double[] rectangles = new double[n + 1];
+            var h = (b - a) / n;
+            var sum = (f(a)+f(b))/2;
+            for (double i = 1; i <= n - 1; i++)
+            {
+                var x = a + i * h;
+                rectangles[(int)i] = x;
+                sum += f(x);
+            }
+
+            rectangles[rectangles.GetLength(0) - 1] = b;
+            var result = h * sum;
+            graph(Convert.ToDouble(lower.Text), Convert.ToDouble(upper.Text), 1, rectangles);
+            return result;
+        }
 
         private void calculate_Click(object sender, EventArgs e)
         {
-            double res = LeftRectangle(Convert.ToDouble(lower.Text), Convert.ToDouble(upper.Text), Convert.ToInt32(textBox1.Text));
+            double res = Trapezia(Convert.ToDouble(lower.Text), Convert.ToDouble(upper.Text), Convert.ToInt32(textBox1.Text));
             label1.Text = res.ToString();
         }
         public void graph(double min, double max, int step, double[] rectangles)//сама отрисовка графика
